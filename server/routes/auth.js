@@ -108,4 +108,66 @@ router.get('/getposts', async (req, res) => {
   }
 });
 
+//delete post
+router.delete('/deletePost/:postId', async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const deletedPost = await getPost.findByIdAndDelete(postId);
+
+    if (!deletedPost) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    res.status(200).json({ message: 'Post deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete comment by post ID and comment index
+router.delete('/deleteComment/:postId/:commentIndex', async (req, res) => {
+  try {
+    const { postId, commentIndex } = req.params;
+    const post = await getPost.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    post.comments.splice(commentIndex, 1); // Remove the comment at the specified index
+
+    await post.save();
+
+    res.status(200).json({ message: 'Comment deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get all users
+router.get('/users', async (req, res) => {
+  try {
+    const users = await user.find();
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+// Delete user by ID
+router.delete('/deleteUser/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const deletedUser = await user.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 module.exports = router;

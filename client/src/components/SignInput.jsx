@@ -5,7 +5,7 @@ export default function SignInput({ type, placeholderText, setState }) {
   return (
     <div>
       <input
-        className="border-2 border-blue-500 rounded py-1 px-2 m-2 font-bold"
+        className="border-2 border-lime-500 rounded py-1 px-2 m-2 font-bold"
         type={type}
         placeholder={placeholderText}
         onChange={(e) => {

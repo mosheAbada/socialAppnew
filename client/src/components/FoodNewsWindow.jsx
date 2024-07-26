@@ -9,9 +9,8 @@ export default function FoodNewsWindow() {
 
   useEffect(() => {
     setTimeout(() => {
-      
       id >= imgs.length - 1 ? setId(0) : setId((priv) => priv + 1);
-    }, 2000);
+    }, 3000);
   }, [id]);
 
   return (

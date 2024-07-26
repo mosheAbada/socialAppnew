@@ -6,7 +6,7 @@ export default function SignButton({ btnName, func }) {
     <div>
       <button
         onClick={func}
-        className="bg-blue-500 px-4 py-2 rounded font-bold hover:bg-opacity-95 hover:scale-110 hover:text-white"
+        className="bg-lime-500 px-4 py-2 rounded font-bold hover:bg-opacity-95 hover:scale-110 hover:text-white"
       >
         {btnName}
       </button>
