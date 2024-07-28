@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
 const cors = require('cors');
 const app = express();
-const PORT = 3001 || 5000;
+
+require('dotenv').config(); // Load environment variables from .env file
+const port = 3001 || 5000;
 
 app.use(express.json());
 app.use(cors());
@@ -11,12 +13,16 @@ app.use(cors());
 app.use('/', authRoutes);
 
 mongoose
-  .connect('mongodb://127.0.0.1:27017/socialapp')
+  .connect(
+    'mongodb+srv://foodisgood:ma123456@cluster0.pvfjbjr.mongodb.net/',
+    {}
+  )
   .then(() => {
-    app.listen(PORT, () => {
-      console.log('server listening on port', PORT);
+    console.log('Successfully connected to MongoDB');
+    app.listen(port, () => {
+      console.log(`Server listening on port ${port}`);
     });
   })
   .catch((err) => {
-    console.log('error', err);
+    console.log('Error connecting to MongoDB:', err);
   });

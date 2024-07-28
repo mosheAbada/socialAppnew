@@ -23,34 +23,36 @@ export default function DropDown({ setState, gender }) {
   const handleDropdown = () => {
     setIsOpen(!isOpen);
   };
-  //choose gemder drop down
+  //choose gender drop down
   return (
-    <div className="flex">
-      <div className="">
+    <div className=" px-2 py-1 m-2 rounded mx-8">
+      <div className=" px-2 py-1">
         <button
           onClick={handleDropdown}
-          className="border-2 border-lime-500 w-full px-4 py-1 rounded"
+          className="border-2 border-lime-500  px-2 py-1 rounded"
         >
           {gender ? gender : translations[language].Title}
         </button>
-        <div className={`border border-lime-500 mt-2 ${!isOpen ? 'hidden' : ''}`}>
+        <div
+          className={`border border-lime-500 mt-2 ${!isOpen ? 'hidden' : ''}`}
+        >
           <p
             onClick={() => {
               setState('male');
               setIsOpen(!isOpen);
             }}
-            className="hover:bg-blue-500 cursor-pointer"
+            className="hover:bg-blue-500 cursor-pointer border border-b border-lime-300 "
           >
-            {translations[language].Male} 
+            {translations[language].Male}
           </p>
           <p
             onClick={() => {
               setState('female');
               setIsOpen(!isOpen);
             }}
-            className="hover:bg-pink-500 cursor-pointer"
+            className="hover:bg-pink-500 cursor-pointer border border-b border-lime-300"
           >
-            {translations[language].Female} 
+            {translations[language].Female}
           </p>
           <p
             onClick={() => {
@@ -59,7 +61,7 @@ export default function DropDown({ setState, gender }) {
             }}
             className="hover:bg-lime-500 cursor-pointer"
           >
-            {translations[language].Other} 
+            {translations[language].Other}
           </p>
         </div>
       </div>

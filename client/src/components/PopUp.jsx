@@ -26,10 +26,10 @@ export default function PopUp({
       Diabetics: 'Diabetics',
       LowCalorie: 'Low calorie',
       LowFat: 'Low Fat',
-      Value:'Enter Recipe',
+      Value: 'Enter Recipe',
       Create: 'Create Post',
-      SubjectEmpty:'Choose category',
-      ValueEmpty:'Enter your recipe',
+      SubjectEmpty: 'Choose category',
+      ValueEmpty: 'Enter your recipe',
     },
     he: {
       Hi: 'העלה את המתכון שלך',
@@ -38,10 +38,10 @@ export default function PopUp({
       Diabetics: 'סוכרתי',
       LowCalorie: 'דל קלוריות',
       LowFat: 'דל שומן',
-      Value:'הכנס מתכון',
+      Value: 'הכנס מתכון',
       Create: 'פרסם',
-      SubjectEmpty:' בחר קטגוריה',
-      ValueEmpty:'הכנס מתכון',
+      SubjectEmpty: ' בחר קטגוריה',
+      ValueEmpty: 'הכנס מתכון',
     },
   };
 
@@ -112,15 +112,15 @@ export default function PopUp({
             </option>
             <option value="Low Fat">{translations[language].LowFat}</option>
           </select>
-          
-          <p className='text-rose-700'>{postSubEmpty}</p>
+
+          <p className="text-rose-700">{postSubEmpty}</p>
           <textarea
             className="border border-lime-400 p-2 w-[100px] rounded-lg focus:w-[200px] transition-all duration-150"
             value={postVal}
             placeholder={translations[language].Value}
             onChange={(e) => setPostVal(e.target.value)}
           />
-          <p className='text-rose-700'>{postValEmpty}</p>
+          <p className="text-rose-700">{postValEmpty}</p>
         </div>
         <div className="absolute bottom-1 flex w-full justify-center">
           <button

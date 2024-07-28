@@ -109,15 +109,15 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full bg-slate-300 flex flex-col">
-      <div className=" justify-between mt-16 ">
+    <div className="w-full bg-slate-300 flex flex-col z-30">
+      <div className=" bg-lime-500 m-2 px-5 py-2 flex  top-56 justify-between items-center fixed  rounded-md z-50 md:top-40 sm:top-56  ">
         <CategoryBar setCategoryChoose={setCategoryChoose} />
       </div>
-      <div className="bg-lime-500 m-2 px-5 py-2 flex justify-between  items-center fixed top-20  rounded-md  z-20">
+      <div className="bg-lime-500 m-2 px-5 py-2 flex justify-between  items-center fixed top-20 rounded-md ">
         <LanguageSwitcher />
       </div>
       <div className="flex flex-row w-full">
-        <div className="w-1/4 p-4 fixed top-16">
+        <div className="w-1/4 p-4  top-16">
           <FoodNewsWindow />
         </div>
         <div>
@@ -148,7 +148,7 @@ export default function Home() {
               user={user?.firstname}
             />
           </div>
-          <div className="mt-4">
+          <div className="mt-20">
             {posts
               .filter(
                 (post) =>
