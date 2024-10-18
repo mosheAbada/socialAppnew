@@ -158,15 +158,12 @@ export default function SignUp() {
 
   return (
     <div className="w-full h-[80vh] grid items-center justify-center mt-16 text-center content-center">
-      <div className="bg-lime-500 m-2 px-5 py-2 flex justify-between items-center fixed top-20 rounded-md z-20">
-        <LanguageSwitcher />
-      </div>
-      <div className="border-2 border-lime-400 p-5 rounded mt-24">
-        <div className="mb-5">
+      <div className="border-2 border-lime-400 p-2 rounded mt-24">
+        <div className="">
           <Title getTitle={translations[language].Title} />
         </div>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-row gap-4">
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-row gap-2">
             <SignInput
               type="text"
               placeholderText={translations[language].Fname}
@@ -219,7 +216,7 @@ export default function SignUp() {
               <p className="mt-4 text-red-500">{errors.general}</p>
             )}
           </div>
-          <div className="mt-10">
+          <div className="mt-5">
             <SignButton btnName={translations[language].Btn} func={signup} />
           </div>
           <p className="mt-4">

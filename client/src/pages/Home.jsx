@@ -7,6 +7,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../LanguageContext'; // Import LanguageContext
 import AccessibilityButton from '../components/AccessibilityButton';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import InstagramCard from '../components/InstagramCard';
+import { useScreensize } from '../hooks/useScreenSize';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -20,7 +23,7 @@ export default function Home() {
   const [showAllComments, setShowAllComments] = useState({});
 
   const { language } = useLanguage(); // Use the language context
-
+  const { screenSize } = useScreensize();
   useEffect(() => {
     setLogIn(!!user);
   }, [user]);
@@ -83,17 +86,17 @@ export default function Home() {
       postButton: 'Post +',
       homePage: 'HOME PAGE:',
       Subject: ': Subject ',
-      commentSection: 'Comment Section:',
+      commentSection: 'Comments :',
       seeMore: 'see more',
       seeLess: 'see less',
       comment: 'Comment',
       submit: 'Submit',
       placeholder: 'Comment here',
-      deletePost: 'Delete Post',
-      deleteComment: 'Delete ',
+      deletePost: <DeleteOutlineIcon />,
+      deleteComment: <DeleteOutlineIcon />,
     },
     he: {
-      welcome: `נעים לראות אותך: ${user?.firstname} ${user?.lastname}`,
+      welcome: `נעים לראות אותך : ${user?.firstname} ${user?.lastname}`,
       postButton: 'פוסט +',
       homePage: 'דף הבית:',
       Subject: ': מתכון ל ',
@@ -103,32 +106,34 @@ export default function Home() {
       comment: 'הגב',
       submit: 'שלח',
       placeholder: 'כתוב כאן תגובה',
-      deletePost: 'מחק פוסט',
-      deleteComment: 'מחק ',
+      deletePost: <DeleteOutlineIcon />,
+      deleteComment: <DeleteOutlineIcon />,
     },
   };
 
   return (
     <div className="w-full bg-slate-300 flex flex-col z-30">
-      <div className=" bg-lime-500 m-2 px-5 py-2 flex  top-56 justify-between items-center fixed  rounded-md z-50 md:top-40 sm:top-56  ">
-        <CategoryBar setCategoryChoose={setCategoryChoose} />
-      </div>
-      <div className="bg-lime-500 m-2 px-5 py-2 flex justify-between  items-center fixed top-20 rounded-md ">
-        <LanguageSwitcher />
-      </div>
-      <div className="flex flex-row w-full">
-        <div className="w-1/4 p-4  top-16">
-          <FoodNewsWindow />
+      <div className="flex w-full justify-center">
+        <div className=" bg-lime-500 m-2 px-3 py-2 flex absolute top-24 justify-center items-center rounded-md z-10  ">
+          <CategoryBar setCategoryChoose={setCategoryChoose} />
         </div>
+      </div>
+      {screenSize.dynamicWidth > 1300 ? (
+        <div className=" fixed top-32 left-4">
+          <InstagramCard />
+        </div>
+      ) : null}
+
+      <div className="flex flex-row w-full">
         <div>
           <AccessibilityButton />
         </div>
-        <div className="w-3/4 p-4 ml-auto flex flex-col">
+        <div className="w-full justify-center items-center grid">
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={`${
               logIn ? '' : 'hidden'
-            } bg-lime-500 hover:bg-lime-600 text-black font-bold py-2 px-4 rounded-full fixed bottom-5 right-5 shadow-md active:shadow-none active:scale-90 z-10`}
+            }  bg-lime-500 hover:bg-lime-600 text-black font-bold py-2 px-4 rounded-full fixed bottom-5 right-5 shadow-md active:shadow-none active:scale-90 z-10`}
           >
             {translations[language].postButton}
           </button>
@@ -148,115 +153,130 @@ export default function Home() {
               user={user?.firstname}
             />
           </div>
-          <div className="mt-20">
+          <div className="mt-44 w-full">
             {posts
               .filter(
                 (post) =>
                   categoryChosen === '' || post.postSub === categoryChosen
               )
-              .map((post) => (
-                <div
-                  key={post._id}
-                  className="border border-gray-700 rounded-lg p-6 mb-4 flex shadow-md"
-                >
-                  <div className="w-2/3 pr-4">
-                    <p className="font-bold text-lg border-b-2 border-black">
-                      {post.user} :
-                    </p>
-                    <p className="font-semibold text-md border-b-2 border-black">
-                      {post.postSub} {translations[language].Subject}
-                    </p>
-                    <p className="font-normal text-md">{post.postVal}</p>
-                    {user?.email === 'moshe@gmail.com' && (
-                      <button
-                        onClick={() => deletePost(post._id)}
-                        className="text-red-500 mt-2"
-                      >
-                        {translations[language].deletePost}
-                      </button>
-                    )}
-                  </div>
-                  <div className="w-1/3 pl-4 border-l border-black">
-                    <p className="text-center font-semibold text-md border-b-2 border-black">
-                      {translations[language].commentSection}
-                    </p>
-                    {post.comments
-                      .slice(
-                        0,
-                        showAllComments[post._id] ? post.comments.length : 3
-                      )
-                      .map((p, index) => (
-                        <div key={index} className="text-center flex">
-                          <p className="font-semibold">{p.userComment} :</p>
-                          <p>{p.comment}</p>
-                          {user?.email === 'moshe@gmail.com' && (
-                            <button
-                              onClick={() => deleteComment(post._id, index)}
-                              className="text-red-500 ml-2"
-                            >
-                              {translations[language].deleteComment}
-                            </button>
-                          )}
-                        </div>
-                      ))}
-                    {post.comments.length > 3 && (
-                      <div className="">
+              .map((post, i) => (
+                <div>
+                  {i % 3 == 0 && i != 0 ? (
+                    <div className="p-4  top-16">
+                      <FoodNewsWindow />
+                    </div>
+                  ) : null}
+
+                  <div
+                    key={post._id}
+                    className="border border-gray-700 rounded-lg p-6 mb-4 flex shadow-md gap-4"
+                  >
+                    <div className="w-1/2 relative">
+                      <p className="font-bold text-lg border-b-2 border-black">
+                        {post.user} :
+                      </p>
+                      <p className="font-semibold text-md border-b-2 border-black">
+                        {post.postSub}
+                      </p>
+                      <p className="font-normal text-md">{post.postVal}</p>
+                      {user?.email === 'moshe@gmail.com' && (
                         <button
-                          onClick={() =>
-                            setShowAllComments((prev) => ({
-                              ...prev,
-                              [post._id]: !prev[post._id],
-                            }))
-                          }
-                          className="text-lime-500 underline mt-2"
+                          onClick={() => deletePost(post._id)}
+                          className="text-red-500 mt-2 absolute bottom-0 right-0"
                         >
-                          {showAllComments[post._id]
-                            ? translations[language].seeLess
-                            : translations[language].seeMore}
+                          {translations[language].deletePost}
                         </button>
-                      </div>
-                    )}
-                    <button
-                      onClick={() =>
-                        setPosts((prevPosts) =>
-                          prevPosts.map((p) =>
-                            p._id === post._id
-                              ? { ...p, commentTry: !p.commentTry }
-                              : p
-                          )
+                      )}
+                    </div>
+                    <div className=" pl-3 border-l border-black w-full">
+                      <p className="text-center font-semibold text-md border-b-2 border-black">
+                        {translations[language].commentSection}
+                      </p>
+                      {post.comments
+                        .slice(
+                          0,
+                          showAllComments[post._id] ? post.comments.length : 3
                         )
-                      }
-                      className={`${
-                        logIn ? '' : 'hidden'
-                      } bg-lime-500 hover:bg-lime-600 text-black font-bold py-2 px-4 rounded mt-2`}
-                    >
-                      {translations[language].comment}
-                    </button>
-                    <div className={`${post.commentTry ? '' : 'hidden'} mt-2`}>
-                      <input
-                        type="text"
-                        name="comment"
-                        className="border-2 border-black w-full p-2 mb-2"
-                        placeholder={translations[language].placeholder}
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                      />
+                        .map((p, index) => (
+                          <div
+                            key={index}
+                            className=" text-center flex justify-between w-full"
+                          >
+                            <div className=" shadow-md shadow-slate-500 rounded-md  p-1 w-full flex my-2 ">
+                              <p className="font-semibold">{p.userComment} :</p>
+                              <p>{p.comment}</p>
+                            </div>
+                            {user?.email === 'moshe@gmail.com' && (
+                              <button
+                                onClick={() => deleteComment(post._id, index)}
+                                className="text-red-500 ml-2"
+                              >
+                                {translations[language].deleteComment}
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                      {post.comments.length > 3 && (
+                        <div className="">
+                          <button
+                            onClick={() =>
+                              setShowAllComments((prev) => ({
+                                ...prev,
+                                [post._id]: !prev[post._id],
+                              }))
+                            }
+                            className="text-lime-500 underline mt-2"
+                          >
+                            {showAllComments[post._id]
+                              ? translations[language].seeLess
+                              : translations[language].seeMore}
+                          </button>
+                        </div>
+                      )}
                       <button
-                        onClick={() => {
-                          setRenderPosts(!renderPosts);
+                        onClick={() =>
                           setPosts((prevPosts) =>
                             prevPosts.map((p) =>
                               p._id === post._id
-                                ? { ...p, commentTry: false }
+                                ? { ...p, commentTry: !p.commentTry }
                                 : p
                             )
-                          );
-                          updateComment(post._id);
-                        }}
-                        className="bg-lime-400 rounded-md p-2 shadow-md w-full"
+                          )
+                        }
+                        className={`${
+                          logIn ? '' : 'hidden'
+                        } bg-lime-500 hover:bg-lime-600 text-black font-bold py-2 px-4 rounded mt-2`}
                       >
-                        {translations[language].submit}
+                        {translations[language].comment}
                       </button>
+                      <div
+                        className={`${post.commentTry ? '' : 'hidden'} mt-2`}
+                      >
+                        <input
+                          type="text"
+                          name="comment"
+                          className="border-2 border-black w-full p-2 mb-2"
+                          placeholder={translations[language].placeholder}
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                        />
+                        <button
+                          onClick={() => {
+                            setRenderPosts(!renderPosts);
+                            setPosts((prevPosts) =>
+                              prevPosts.map((p) =>
+                                p._id === post._id
+                                  ? { ...p, commentTry: false }
+                                  : p
+                              )
+                            );
+                            updateComment(post._id);
+                          }}
+                          className="bg-lime-400 rounded-md p-2 shadow-md w-full"
+                        >
+                          {translations[language].submit}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -264,6 +284,11 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {screenSize.dynamicWidth < 1300 ? (
+        <div className=" ">
+          <InstagramCard />
+        </div>
+      ) : null}
     </div>
   );
 }

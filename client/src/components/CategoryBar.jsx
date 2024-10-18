@@ -26,8 +26,8 @@ export default function CategoryBar({ setCategoryChoose }) {
 
   return (
     <div className="relative ">
-      <div className="bg-lime-500 flex-col sm:flex-row p-2 flex justify-between items-center rounded-md shadow-md ">
-        <h3 className="text-black font-bold text-sm md:text-base flex items-center ">
+      <div className="bg-lime-500 sm:flex-row p-2 flex justify-between items-center rounded-md shadow-md  gap-x-2">
+        <h3 className="text-black font-bold text-xs md:text-base flex items-center ">
           {translations[language].title}
         </h3>
         <button
@@ -38,7 +38,7 @@ export default function CategoryBar({ setCategoryChoose }) {
         </button>
       </div>
       <div
-        className={`absolute top-full left-0 mt-2 w-full max-w-xs bg-lime-500 rounded-lg shadow-lg transition-transform duration-300 ease-in-out ${
+        className={` top-full left-0 mt-2 w-full max-w-xs bg-lime-500  transition-transform duration-300 ease-in-out ${
           openCategory ? 'block' : 'hidden'
         } z-50`}
       >

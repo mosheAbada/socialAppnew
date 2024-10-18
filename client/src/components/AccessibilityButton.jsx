@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../LanguageContext';
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
 const AccessibilityButton = () => {
   const [isHighContrast, setIsHighContrast] = useState(false);
   const [isLargerText, setIsLargerText] = useState(false);
   const { language } = useLanguage();
 
-  const translations = {
-    en: {
-      title: 'Accessibility',
-    },
-    he: {
-      title: 'נגישות',
-    },
-  };
+  // const translations = {
+  //   en: {
+  //     title: 'Accessibility',
+  //   },
+  //   he: {
+  //     title: 'נגישות',
+  //   },
+  // };
 
   //change colors
   const toggleHighContrast = () => {
@@ -37,7 +37,7 @@ const AccessibilityButton = () => {
         toggleTextSize();
       }}
     >
-      {translations[language].title}
+      <VisibilityIcon />
     </button>
   );
 };

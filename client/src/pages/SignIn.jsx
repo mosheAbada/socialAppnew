@@ -61,11 +61,8 @@ export default function SignIn() {
   };
 
   return (
-    <div className="border w-full h-[80vh] grid items-center justify-center">
-      <div className="bg-lime-500 m-2 px-5 py-2 flex justify-between items-center fixed top-20 rounded-md z-20">
-        <LanguageSwitcher />
-      </div>
-      <div className="border-2 border-lime-400 p-7  rounded">
+    <div className="border w-full h-[80vh] grid items-center mt-6 justify-center">
+      <div className="border-2 border-lime-400 p-7 rounded">
         <form onSubmit={signin}>
           <div className="mb-10">
             <Title getTitle={translations[language].Title} />
